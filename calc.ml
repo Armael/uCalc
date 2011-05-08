@@ -4,6 +4,8 @@ type arbre =
     | Data of data
     | Op of op * (arbre list)
 
+(* Si f n'est pas une opération algébrique (par ex - ou /), neutre est le neutre de la loi associée
+(par ex + ou * ). Dans ce cas, f neutre x prend l'inverse de x pour la loi associée *)
 let make_op f neutre = function
                         | [] -> neutre
                         | [x] -> f neutre x
