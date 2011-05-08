@@ -4,21 +4,15 @@ type arbre =
     | Data of data
     | Op of op * (arbre list)
 
-let rec sum args = List.fold_left ( + ) 0 args
+let make_op f neutre = function
+                        | [] -> neutre
+                        | [x] -> f neutre x
+                        | x::xs -> List.fold_left f x xs
 
-let diff args =
-    let n = List.length args in 
-    if n = 0 then failwith "Pas assez d'arguments"
-    else if n = 1 then - (List.hd args)
-    else List.fold_left (fun acc x -> acc-x) (List.hd args) (List.tl args)
-
-let rec prod args = List.fold_left ( * ) 1 args
-
-let div args = 
-    let n = List.length args in
-    if n = 0 then failwith "Pas assez d'arguments"
-    else if n = 1 then 1 / (List.hd args)
-    else List.fold_left (fun acc x -> acc/x) (List.hd args) (List.tl args)
+let sum = make_op ( + ) 0
+let diff = make_op ( - ) 0
+let prod = make_op ( * ) 1
+let div = make_op ( / ) 1
 
 let rec parse = parser
     | [< '( ' ' | '\n' | '\t' ); rest >] -> parse rest
