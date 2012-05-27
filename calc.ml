@@ -46,6 +46,8 @@ let rec eval = function
     | Op (f, args) -> f (List.map eval args)
 
 let () =
-    let input = Stream.of_channel stdin in
-    let arbre_sortie = parse input in
-    print_int (eval arbre_sortie); print_newline ()
+    while true do
+        let input = Stream.of_channel stdin in
+        let arbre_sortie = parse input in
+        print_int (eval arbre_sortie); print_newline ()
+    done
